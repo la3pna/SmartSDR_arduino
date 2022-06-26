@@ -75,9 +75,12 @@ void setup() {
       delay(1); // do nothing, no point running without Ethernet hardware
     }
   }
+
+  reloop:
   while (Ethernet.linkStatus() == LinkOFF) {
     Serial.println("Ethernet cable is not connected.");
     delay(500);
+    goto reloop; // yeah the dreaded goto! world will end!
   }
 
   // give the Ethernet shield a second to initialize:
@@ -92,7 +95,7 @@ void setup() {
   } else {
     // if you didn't get a connection to the server:
     Serial.println("connection failed");
-
+    goto reloop; //end of the world due to goto!
     // here goes the code to light the red led for error...
     // probably should code up a while() to have it retry...
   }
